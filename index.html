@@ -13,15 +13,22 @@
                 <p>ToDO</p>
                 <img src="./img/logo.svg" alt="logo" class="logo">
             </div>
-            <div class="main-menu">Press Me</div>
+            <div class="main-menu">
+                <!-- <div class="main-menu-text">Menu</div> -->
+                <img src="./img/menu.svg" alt="menu" class="main-menu-img">
+            </div>
         </div>
         <div class="main-content">
             <div class="projects-container">
                 <div class="projects-header">
                     <h1>Projects</h1>
-                    <button class="newTodo">Add+</button>
                 </div>
-                <input type="search" placeholder="Search project..." class="search">
+                <div class="new-project">
+                    <form action="" class="project-form">
+                        <input type="text" placeholder="New Project name" name="projectName" id="projectName" maxlength="40">
+                        <button type="submit" class="newTodo">Add+</button>
+                    </form>
+                </div>
                 <div class="projects">
                     <div class="project">ToDO App</div>
                     <div class="project">Garden Cleaning</div>
