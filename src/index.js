@@ -31,6 +31,7 @@ const App = (() => {
                 let newProject = new toDO.createProject(projectName);
                 toDO.projects.push(newProject);
                 toDO.renderProjects(projectName);
+                toDO.dom.projectName.value = '';
             })
         },
         createProject: function Project(projectName) {
