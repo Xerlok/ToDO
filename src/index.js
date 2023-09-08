@@ -30,10 +30,22 @@ const App = (() => {
                 let projectName = toDO.dom.projectName.value;
                 let newProject = new toDO.createProject(projectName);
                 toDO.projects.push(newProject);
+                toDO.renderProjects(projectName);
             })
         },
         createProject: function Project(projectName) {
             this.projectName = projectName;
+        },
+        renderProjects: function renderProjects(name) {
+            while(toDO.dom.projects.hasChildNodes()) {
+                toDO.dom.projects.removeChild(toDO.dom.projects.firstChild);
+            }
+
+            for (let i = 0; i < toDO.projects.length; i++) {
+                let project = toDO.dom.createProject(toDO.projects[i].projectName);
+
+                toDO.dom.projects.append(project);
+            }
         }
     }
 
