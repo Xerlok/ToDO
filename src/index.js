@@ -6,7 +6,6 @@ const App = (() => {
     const toDO = {
         dom: cacheDOM(),
         projects: [],
-        todos: [],
 
         switchPage: function switchPage() {
             if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'flex') {
@@ -26,30 +25,64 @@ const App = (() => {
 
             toDO.dom.projectForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-
-                let projectName = toDO.dom.projectName.value;
-                let newProject = new toDO.createProject(projectName);
+                let newProject = new toDO.createProject(toDO.dom.projectName.value);
                 toDO.projects.push(newProject);
-                toDO.renderProjects(projectName);
+                toDO.renderProjects();
                 toDO.dom.projectName.value = '';
+                console.log(toDO.projects);
             })
+
+            toDO.dom.todoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let projectName = toDO.dom.todoHeader.innerText;
+                let currProjIndx = toDO.getProject(projectName);
+                let newTodo = new toDO.createTodo(toDO.dom.todoName.value);
+                toDO.projects[currProjIndx].todos.push(newTodo);
+                toDO.renderTodos(currProjIndx);
+                toDO.dom.todoName.value = '';
+                console.log(toDO.projects);
+            })
+            
         },
         createProject: function Project(projectName) {
             this.projectName = projectName;
+            this.todos = [];
         },
-        renderProjects: function renderProjects(name) {
+        createTodo: function Todo(todoName) {
+            this.todoName = todoName;
+        },
+        renderProjects: function renderProjects() {
             while(toDO.dom.projects.hasChildNodes()) {
                 toDO.dom.projects.removeChild(toDO.dom.projects.firstChild);
             }
 
             for (let i = 0; i < toDO.projects.length; i++) {
                 let project = toDO.dom.createProject(toDO.projects[i].projectName);
-
+                project.addEventListener('click', (e) => {
+                    let currentProject = toDO.getProject(e.target.innerText);
+                    toDO.dom.projectsContainer.style.display = 'none';
+                    toDO.dom.todoContainer.style.display = 'flex';
+                    toDO.dom.todoHeader.innerText = this.projects[currentProject].projectName;
+                    toDO.renderTodos(currentProject);
+                })
                 toDO.dom.projects.append(project);
             }
+        },
+        renderTodos: function renderTodos(currentProject) {
+            while(toDO.dom.todos.hasChildNodes()) {
+                toDO.dom.todos.removeChild(toDO.dom.todos.firstChild);
+            }
+
+            for (let i = 0; i < toDO.projects[0].todos.length; i++) {
+                let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
+                toDO.dom.todos.append(todo);
+            }
+        },
+        getProject: function getProject(name) {
+            let currentProject = toDO.projects.findIndex(project => project.projectName === name)
+            return currentProject;
         }
     }
 
     toDO.addListeners();
-    console.log(toDO.projects);
 })();
