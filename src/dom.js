@@ -45,6 +45,6 @@ export default function cacheDOM() {
         return todo;
     }
 
-    return {menuBtn, projectsContainer, todoContainer, projectForm, todoForm, projectName, todoName, projectTemplate, projects, createProject,
-    todos, createTodo, todoHeader};
+    return {menuBtn, projectsContainer, todoContainer, projectForm, todoForm, projectName, todoName, projectTemplate,
+    projects, createProject, todos, createTodo, todoHeader};
 }

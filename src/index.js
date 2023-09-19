@@ -29,7 +29,7 @@ const App = (() => {
                 toDO.projects.push(newProject);
                 toDO.renderProjects();
                 toDO.dom.projectName.value = '';
-                console.log(toDO.projects);
+                toDO.saveToStorage();
             })
 
             toDO.dom.todoForm.addEventListener('submit', (e) => {
@@ -40,7 +40,7 @@ const App = (() => {
                 toDO.projects[currProjIndx].todos.push(newTodo);
                 toDO.renderTodos(currProjIndx);
                 toDO.dom.todoName.value = '';
-                console.log(toDO.projects);
+                toDO.saveToStorage();
             })
             
         },
@@ -72,17 +72,29 @@ const App = (() => {
             while(toDO.dom.todos.hasChildNodes()) {
                 toDO.dom.todos.removeChild(toDO.dom.todos.firstChild);
             }
-
-            for (let i = 0; i < toDO.projects[0].todos.length; i++) {
-                let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
-                toDO.dom.todos.append(todo);
+            if (toDO.projects[currentProject].todos != '') {
+                for (let i = 0; i < toDO.projects[0].todos.length; i++) {
+                    let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
+                    toDO.dom.todos.append(todo);
+                }
             }
+
         },
         getProject: function getProject(name) {
             let currentProject = toDO.projects.findIndex(project => project.projectName === name)
             return currentProject;
+        },
+        saveToStorage: function saveToStorage() {
+            localStorage.setItem('projects', JSON.stringify(toDO.projects));
+        },
+        loadFromStorage: function loadFromStorage() {
+            if (localStorage.getItem('projects') != null) {
+                toDO.projects = JSON.parse(localStorage.getItem('projects'));
+            }
         }
     }
 
     toDO.addListeners();
+    toDO.loadFromStorage();
+    toDO.renderProjects();
 })();
