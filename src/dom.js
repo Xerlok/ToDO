@@ -26,6 +26,9 @@ export default function cacheDOM() {
         let todo = document.createElement('div');
         todo.className = 'todo';
 
+        let checkboxLabel = document.createElement('label');
+        checkboxLabel.className = 'checkbox-control'
+
         let todoCheckbox = document.createElement('input');
         todoCheckbox.type = 'checkbox';
         todoCheckbox.className = 'todo-checkbox';
@@ -38,13 +41,14 @@ export default function cacheDOM() {
         todoDue.className = 'due-date';
         todoDue.innerText = dueDate;
 
-        todo.append(todoCheckbox);
+        checkboxLabel.append(todoCheckbox);
+        todo.append(checkboxLabel);
         todo.append(todoName);
         todo.append(todoDue);
 
         return todo;
     }
 
-    return {menuBtn, projectsContainer, todoContainer, projectForm, todoForm, projectName, todoName, projectTemplate,
-    projects, createProject, todos, createTodo, todoHeader};
+    return {menuBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, projectTemplate,
+    projects, createProject, todos, createTodo};
 }

@@ -36,7 +36,7 @@ const App = (() => {
                 e.preventDefault();
                 let projectName = toDO.dom.todoHeader.innerText;
                 let currProjIndx = toDO.getProject(projectName);
-                let newTodo = new toDO.createTodo(toDO.dom.todoName.value);
+                let newTodo = new toDO.createTodo(toDO.dom.todoName.value, false);
                 toDO.projects[currProjIndx].todos.push(newTodo);
                 toDO.renderTodos(currProjIndx);
                 toDO.dom.todoName.value = '';
@@ -48,8 +48,9 @@ const App = (() => {
             this.projectName = projectName;
             this.todos = [];
         },
-        createTodo: function Todo(todoName) {
+        createTodo: function Todo(todoName, todoDone) {
             this.todoName = todoName;
+            this.todoDone = todoDone;
         },
         renderProjects: function renderProjects() {
             while(toDO.dom.projects.hasChildNodes()) {
@@ -73,16 +74,31 @@ const App = (() => {
                 toDO.dom.todos.removeChild(toDO.dom.todos.firstChild);
             }
             if (toDO.projects[currentProject].todos != '') {
-                for (let i = 0; i < toDO.projects[0].todos.length; i++) {
+                for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
                     let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
+                    todo.childNodes[0].childNodes[0].addEventListener('click', (e) => {
+                        let currentProject = this.getProject(toDO.dom.todoHeader.innerText);
+                        let currentTodo = this.getTodo(currentProject, todo.innerText);
+                        if (e.target.checked) {
+                            toDO.projects[currentProject].todos[currentTodo].todoDone = true;
+                        }
+                        else {
+                            toDO.projects[currentProject].todos[currentTodo].todoDone = false;
+                        }
+                        console.log(toDO.projects);
+                    });
                     toDO.dom.todos.append(todo);
                 }
             }
 
         },
         getProject: function getProject(name) {
-            let currentProject = toDO.projects.findIndex(project => project.projectName === name)
+            let currentProject = toDO.projects.findIndex(project => project.projectName === name);
             return currentProject;
+        },
+        getTodo: function getTodo(project, name) {
+            let currentTodo = toDO.projects[project].todos.findIndex(todo => todo.todoName === name);
+            return currentTodo;
         },
         saveToStorage: function saveToStorage() {
             localStorage.setItem('projects', JSON.stringify(toDO.projects));
