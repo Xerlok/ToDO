@@ -63,7 +63,7 @@ const App = (() => {
                     let currentProject = toDO.getProject(e.target.innerText);
                     toDO.dom.projectsContainer.style.display = 'none';
                     toDO.dom.todoContainer.style.display = 'flex';
-                    toDO.dom.todoHeader.innerText = this.projects[currentProject].projectName;
+                    toDO.dom.todoHeader.innerText = toDO.projects[currentProject].projectName;
                     toDO.renderTodos(currentProject);
                 })
                 toDO.dom.projects.append(project);
@@ -77,16 +77,22 @@ const App = (() => {
                 for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
                     let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
                     todo.childNodes[0].childNodes[0].addEventListener('click', (e) => {
-                        let currentProject = this.getProject(toDO.dom.todoHeader.innerText);
-                        let currentTodo = this.getTodo(currentProject, todo.innerText);
+                        let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
+                        let currentTodo = toDO.getTodo(currentProject, todo.innerText);
                         if (e.target.checked) {
                             toDO.projects[currentProject].todos[currentTodo].todoDone = true;
                         }
                         else {
                             toDO.projects[currentProject].todos[currentTodo].todoDone = false;
                         }
-                        console.log(toDO.projects);
+                        toDO.saveToStorage();
+                        renderTodos(currentProject);
                     });
+                    if (toDO.projects[currentProject].todos[i].todoDone === true) {
+                        todo.style.backgroundColor = 'grey';
+                        todo.style.textDecoration = 'line-through';
+                        todo.childNodes[0].childNodes[0].checked = true;
+                    }
                     toDO.dom.todos.append(todo);
                 }
             }
