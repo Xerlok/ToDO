@@ -11,9 +11,6 @@ export default function cacheDOM() {
     const todoHeader = document.querySelector('.todo-h1');
     const todos = document.querySelector('.todos');
 
-    const projectTemplate = document.createElement('div');
-    projectTemplate.classList.add('project');
-
     function createProject(name) {
         let project = document.createElement('div');
         project.className = 'project';
@@ -50,5 +47,5 @@ export default function cacheDOM() {
     }
 
     return {menuBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, 
-    projectTemplate, projects, createProject, todos, createTodo};
+    projects, createProject, todos, createTodo};
 }
