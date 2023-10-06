@@ -64,7 +64,7 @@ const App = (() => {
                 project.addEventListener('click', toDO.addProjectClick);
                 project.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
-                    toDO.showModal(e, project);
+                    toDO.showModal('project', project);
                 })
                 toDO.dom.projects.append(project);
             }
@@ -77,7 +77,8 @@ const App = (() => {
                 for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
                     let newTodo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
                     newTodo.todo.addEventListener('contextmenu', (e) => {
-                        toDO.todoRightClick(e, newTodo.todo);
+                        e.preventDefault();
+                        toDO.showModal('todo', newTodo.todo);
                     });
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
                         toDO.checkboxClick(e, newTodo.todo);
@@ -119,15 +120,14 @@ const App = (() => {
             toDO.saveToStorage();
             toDO.renderTodos(currentProject);
         },
-        todoRightClick: function todoRightClick(e, todo) {
-            e.preventDefault();
+        todoRightClick: function todoRightClick(todo) {
             let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
             let currentTodo = toDO.getTodo(currentProject, todo.innerText);
             toDO.projects[currentProject].todos.splice(currentTodo, 1);
             toDO.saveToStorage();
             toDO.renderTodos(currentProject);
         },
-        projectRightClick: function projectRightClick(e, project) {
+        projectRightClick: function projectRightClick(project) {
             let currentProject = toDO.getProject(project.innerText);
             toDO.projects.splice(currentProject, 1);
             toDO.saveToStorage();
@@ -141,7 +141,7 @@ const App = (() => {
                 toDO.projects = JSON.parse(localStorage.getItem('projects'));
             }
         },
-        showModal: function showModal(e, todo) {
+        showModal: function showModal(type, obj) {
             const myModal = new WebcimesModal({
                 setId: null, // set a specific id on the modal. default "null" 
                 setClass: null, // set a specific class on the modal, default "null"
@@ -170,7 +170,14 @@ const App = (() => {
                 beforeDestroy: () => {}, // callback before destroy modal
                 afterDestroy: () => {}, // callback after destroy modal
                 onCancelButton: () => {}, // callback after triggering cancel button
-                onConfirmButton: () => {toDO.projectRightClick(e, todo);}, // callback after triggering confirm button
+                onConfirmButton: () => {
+                    if (type === 'project') {
+                        toDO.projectRightClick(obj);
+                    }
+                    else if (type === 'todo') {
+                        toDO.todoRightClick(obj);
+                    }
+                }, // callback after triggering confirm button
             });
         }
     }
