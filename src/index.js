@@ -59,13 +59,7 @@ const App = (() => {
 
             for (let i = 0; i < toDO.projects.length; i++) {
                 let project = toDO.dom.createProject(toDO.projects[i].projectName);
-                project.addEventListener('click', (e) => {
-                    let currentProject = toDO.getProject(e.target.innerText);
-                    toDO.dom.projectsContainer.style.display = 'none';
-                    toDO.dom.todoContainer.style.display = 'flex';
-                    toDO.dom.todoHeader.innerText = toDO.projects[currentProject].projectName;
-                    toDO.renderTodos(currentProject);
-                })
+                project.addEventListener('click', toDO.addProjectClick);
                 toDO.dom.projects.append(project);
             }
         },
@@ -75,25 +69,16 @@ const App = (() => {
             }
             if (toDO.projects[currentProject].todos != '') {
                 for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
-                    let todo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
-                    todo.childNodes[0].childNodes[0].addEventListener('click', (e) => {
-                        let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
-                        let currentTodo = toDO.getTodo(currentProject, todo.innerText);
-                        if (e.target.checked) {
-                            toDO.projects[currentProject].todos[currentTodo].todoDone = true;
-                        }
-                        else {
-                            toDO.projects[currentProject].todos[currentTodo].todoDone = false;
-                        }
-                        toDO.saveToStorage();
-                        renderTodos(currentProject);
+                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
+                    newTodo.todoCheckbox.addEventListener('click', (e) => {
+                        toDO.checkboxClick(e, newTodo.todo);
                     });
                     if (toDO.projects[currentProject].todos[i].todoDone === true) {
-                        todo.style.backgroundColor = 'grey';
-                        todo.style.textDecoration = 'line-through';
-                        todo.childNodes[0].childNodes[0].checked = true;
+                        newTodo.todo.style.backgroundColor = 'grey';
+                        newTodo.todo.style.textDecoration = 'line-through';
+                        newTodo.todoCheckbox.checked = true;
                     }
-                    toDO.dom.todos.append(todo);
+                    toDO.dom.todos.append(newTodo.todo);
                 }
             }
 
@@ -105,6 +90,25 @@ const App = (() => {
         getTodo: function getTodo(project, name) {
             let currentTodo = toDO.projects[project].todos.findIndex(todo => todo.todoName === name);
             return currentTodo;
+        },
+        addProjectClick: function addProjectClick(e) {
+            let currentProject = toDO.getProject(e.target.innerText);
+            toDO.dom.projectsContainer.style.display = 'none';
+            toDO.dom.todoContainer.style.display = 'flex';
+            toDO.dom.todoHeader.innerText = toDO.projects[currentProject].projectName;
+            toDO.renderTodos(currentProject);
+        },
+        checkboxClick: function checkboxClick(e, todo) {
+            let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
+            let currentTodo = toDO.getTodo(currentProject, todo.innerText);
+            if (e.target.checked) {
+                toDO.projects[currentProject].todos[currentTodo].todoDone = true;
+            }
+            else {
+                toDO.projects[currentProject].todos[currentTodo].todoDone = false;
+            }
+            toDO.saveToStorage();
+            toDO.renderTodos(currentProject);
         },
         saveToStorage: function saveToStorage() {
             localStorage.setItem('projects', JSON.stringify(toDO.projects));

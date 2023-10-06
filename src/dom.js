@@ -42,13 +42,13 @@ export default function cacheDOM() {
         todoDue.innerText = dueDate;
 
         checkboxLabel.append(todoCheckbox);
-        todo.append(checkboxLabel);
-        todo.append(todoName);
         todo.append(todoDue);
+        todo.append(todoName);
+        todo.append(checkboxLabel);
 
-        return todo;
+        return {todo, todoCheckbox};
     }
 
-    return {menuBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, projectTemplate,
-    projects, createProject, todos, createTodo};
+    return {menuBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, 
+    projectTemplate, projects, createProject, todos, createTodo};
 }
