@@ -38,12 +38,26 @@ export default function cacheDOM() {
         todoDue.className = 'due-date';
         todoDue.innerText = dueDate;
 
+        let slideMenu = document.createElement('div');
+        slideMenu.className = 'slideMenu-container';
+
+        let slideMenuBtnEdit = document.createElement('img');
+        slideMenuBtnEdit.className = 'slideMenu-img slideMenu-btn-edit';
+        slideMenuBtnEdit.src = './img/edit.svg';
+
+        let slideMenuBtnDel = document.createElement('img');
+        slideMenuBtnDel.className = 'slideMenu-img slideMenu-btn-del';
+        slideMenuBtnDel.src = './img/delete.svg';
+
         checkboxLabel.append(todoCheckbox);
+        slideMenu.append(slideMenuBtnEdit);
+        slideMenu.append(slideMenuBtnDel);
         todo.append(todoDue);
         todo.append(todoName);
         todo.append(checkboxLabel);
+        todo.append(slideMenu);
 
-        return {todo, todoCheckbox};
+        return {todo, todoCheckbox, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
     }
 
     return {menuBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, 

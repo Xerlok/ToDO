@@ -100,10 +100,11 @@ h1 {
 .project {
     min-height: 90px;
     min-width: 140px;
-    background-color: #fd8d8d;
+    background-color: #f87171;
     border: 2px solid white;
     text-shadow: 3px 5px 5px #1f2937;
     text-align: center;
+    box-shadow: 3px 5px 5px #1f29378b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,16 +182,19 @@ h1 {
 }
 
 .todo {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     background-color: #f87171;
     border: 2px solid black;
+    box-shadow: 3px 5px 5px #1f29378b;
     min-height: 3rem;
     text-shadow: 3px 5px 5px #1f2937;
     max-width: 90%;
     min-width: 20rem;
     padding: 0.5rem;
+    overflow: hidden;
 }
 
 .todo-name {
@@ -263,6 +267,34 @@ input[type="checkbox"]:focus {
     gap: 1.5em;
 }
 
-/* .checkbox-control + .checkbox-control {
-    margin-top: 1em;
-} */
+.slideMenu-container {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    background-color: #fca5a5;
+    right: -30%;
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+.slideMenu-container.open {
+    right: 0%;
+}
+
+.slideMenu-img {
+    max-width: 44px;
+    filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
+    cursor: pointer;
+}
+
+.slideMenu-btn-del {
+    width: 40px;
+    height: 40px;
+}
+
+.slideMenu-btn-edit {
+    width: 40px;
+    height: 40px;
+}

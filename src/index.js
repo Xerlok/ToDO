@@ -8,6 +8,7 @@ const App = (() => {
     const toDO = {
         dom: cacheDOM(),
         projects: [],
+        timesClicked: 0,
 
         switchPage: function switchPage() {
             if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'flex') {
@@ -44,7 +45,6 @@ const App = (() => {
                 toDO.dom.todoName.value = '';
                 toDO.saveToStorage();
             })
-            
         },
         createProject: function Project(projectName) {
             this.projectName = projectName;
@@ -76,13 +76,26 @@ const App = (() => {
             if (toDO.projects[currentProject].todos != '') {
                 for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
                     let newTodo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
-                    newTodo.todo.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
-                        toDO.showModal('todo', newTodo.todo);
-                    });
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
                         toDO.checkboxClick(e, newTodo.todo);
                     });
+                    newTodo.todo.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        if (toDO.timesClicked > 0) {
+                            newTodo.slideMenu.classList.remove('open')
+                            toDO.timesClicked = 0;
+                        }
+                        else {
+                            newTodo.slideMenu.classList.add('open');
+                            toDO.timesClicked++;
+                        }
+                    });
+                    newTodo.slideMenuBtnDel.addEventListener('click', () => {
+                        toDO.showModal('todo', newTodo.todo);
+                    });
+                    newTodo.slideMenuBtnEdit.addEventListener('click', () => {
+                        newTodo.todo.contentEditable = true;
+                    })
                     if (toDO.projects[currentProject].todos[i].todoDone === true) {
                         newTodo.todo.style.backgroundColor = 'grey';
                         newTodo.todo.style.textDecoration = 'line-through';
@@ -147,14 +160,14 @@ const App = (() => {
                 setClass: null, // set a specific class on the modal, default "null"
                 width: 'auto', // width (specify unit), default "auto"
                 height: 'auto', // height (specify unit), default "auto"
-                titleHtml: "<span style='color:red'>DELETE?</span>", // html for title, default "null"
-                bodyHtml: "", // html for body, default "null"
+                titleHtml: "<span style='color:red'>Delete?</span>", // html for title, default "null"
+                bodyHtml: null, // html for body, default "null"
                 buttonCancelHtml: "Cancel", // html for cancel button, default "null"
                 buttonConfirmHtml: "Confirm", // html for confirm button, default "null"
                 closeOnCancelButton: true, // close modal after trigger cancel button, default "true"
                 closeOnConfirmButton: true, // close modal after trigger confirm button, default "true"
                 showCloseButton: true, // show close button, default "true"
-                allowCloseOutside: false, // allow the modal to close when clicked outside, default "true"
+                allowCloseOutside: true, // allow the modal to close when clicked outside, default "true"
                 allowMovement: true, // ability to move modal, default "true"
                 moveFromHeader: true, // if allowMovement is set to "true", ability to move modal from header, default "true"
                 moveFromBody: false, // if allowMovement is set to "true", ability to move modal from body, default "false"
