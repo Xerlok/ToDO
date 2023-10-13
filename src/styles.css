@@ -98,6 +98,7 @@ h1 {
 }
 
 .project {
+    position: relative;
     min-height: 90px;
     min-width: 140px;
     background-color: #f87171;

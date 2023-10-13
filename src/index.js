@@ -9,6 +9,7 @@ const App = (() => {
         dom: cacheDOM(),
         projects: [],
         rightClicks: 0,
+        previousName: '',
 
         switchPage: function switchPage() {
             if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'flex') {
@@ -38,10 +39,10 @@ const App = (() => {
             toDO.dom.todoForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 let projectName = toDO.dom.todoHeader.innerText;
-                let currProjIndx = toDO.getProject(projectName);
+                let currentProjIndx = toDO.getProject(projectName);
                 let newTodo = new toDO.createTodo(toDO.dom.todoName.value, false);
-                toDO.projects[currProjIndx].todos.push(newTodo);
-                toDO.renderTodos(currProjIndx);
+                toDO.projects[currentProjIndx].todos.push(newTodo);
+                toDO.renderTodos(currentProjIndx);
                 toDO.dom.todoName.value = '';
                 toDO.saveToStorage();
             })
@@ -88,16 +89,16 @@ const App = (() => {
                 toDO.dom.projects.append(newProject.project);
             }
         },
-        renderTodos: function renderTodos(currentProject) {
+        renderTodos: function renderTodos(currentProjIndx) {
             while(toDO.dom.todos.hasChildNodes()) {
                 toDO.dom.todos.removeChild(toDO.dom.todos.firstChild);
             }
-            if (toDO.projects[currentProject].todos != '') {
-                for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
-                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
-                    let previousName = newTodo.todoName.innerText;
+            if (toDO.projects[currentProjIndx].todos != '') {
+                for (let i = 0; i < toDO.projects[currentProjIndx].todos.length; i++) {
+                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProjIndx].todos[i].todoName);
+                    toDO.previousName = newTodo.todoName.innerText;
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
-                        toDO.checkboxClick(e, newTodo.todo);
+                        toDO.updateTodoCompletion(e, newTodo.todo);
                     });
                     newTodo.todo.addEventListener('contextmenu', (e) => {
                         e.preventDefault();
@@ -114,20 +115,12 @@ const App = (() => {
                         toDO.showModal('todo', newTodo.todo);
                     });
                     newTodo.slideMenuBtnEdit.addEventListener('click', () => {
-                        previousName = newTodo.todoName.innerText;
-                        newTodo.todoName.contentEditable = true;
-                        newTodo.todoName.focus();
-                        newTodo.slideMenu.classList.remove('open')
-                        toDO.rightClicks = 0;
+                        toDO.makeElementEditable('todo', newTodo);
                     });
                     newTodo.todoName.addEventListener('blur', () => {
-                        newTodo.todoName.contentEditable = false;
-                        let currentTodo = toDO.getTodo(currentProject, previousName);
-                        toDO.projects[currentProject].todos[currentTodo].todoName = newTodo.todoName.innerText;
-                        toDO.saveToStorage();
-                        toDO.renderTodos(currentProject);
+                        toDO.changeElementsName('todo', currentProjIndx, newTodo);
                     });
-                    if (toDO.projects[currentProject].todos[i].todoDone === true) {
+                    if (toDO.projects[currentProjIndx].todos[i].todoDone === true) {
                         newTodo.todo.style.backgroundColor = 'grey';
                         newTodo.todo.style.textDecoration = 'line-through';
                         newTodo.todoCheckbox.checked = true;
@@ -138,45 +131,69 @@ const App = (() => {
 
         },
         getProject: function getProject(name) {
-            let currentProject = toDO.projects.findIndex(project => project.projectName === name);
-            return currentProject;
+            let currentProjIndx = toDO.projects.findIndex(project => project.projectName === name);
+            return currentProjIndx;
         },
         getTodo: function getTodo(project, name) {
-            let currentTodo = toDO.projects[project].todos.findIndex(todo => todo.todoName === name);
-            return currentTodo;
+            let currentTodoIndx = toDO.projects[project].todos.findIndex(todo => todo.todoName === name);
+            return currentTodoIndx;
         },
         openProject: function openProject(e) {
-            let currentProject = toDO.getProject(e.target.innerText);
+            let currentProjIndx = toDO.getProject(e.target.innerText);
             toDO.dom.projectsContainer.style.display = 'none';
             toDO.dom.todoContainer.style.display = 'flex';
-            toDO.dom.todoHeader.innerText = toDO.projects[currentProject].projectName;
-            toDO.renderTodos(currentProject);
+            toDO.dom.todoHeader.innerText = toDO.projects[currentProjIndx].projectName;
+            toDO.renderTodos(currentProjIndx);
         },
-        checkboxClick: function checkboxClick(e, todo) {
-            let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
-            let currentTodo = toDO.getTodo(currentProject, todo.innerText);
+        updateTodoCompletion: function updateTodoCompletion(e, todo) {
+            let currentProjIndx = toDO.getProject(toDO.dom.todoHeader.innerText);
+            let currentTodoIndx = toDO.getTodo(currentProjIndx, todo.innerText);
             if (e.target.checked) {
-                toDO.projects[currentProject].todos[currentTodo].todoDone = true;
+                toDO.projects[currentProjIndx].todos[currentTodoIndx].todoDone = true;
             }
             else {
-                toDO.projects[currentProject].todos[currentTodo].todoDone = false;
+                toDO.projects[currentProjIndx].todos[currentTodoIndx].todoDone = false;
             }
             toDO.saveToStorage();
-            toDO.renderTodos(currentProject);
+            toDO.renderTodos(currentProjIndx);
         },
         deleteElement: function deleteElement (type, obj) {
             if (type === 'project') {
-                let currentProject = toDO.getProject(obj.innerText);
-                toDO.projects.splice(currentProject, 1);
+                let currentProjIndx = toDO.getProject(obj.innerText);
+                toDO.projects.splice(currentProjIndx, 1);
                 toDO.saveToStorage();
                 toDO.renderProjects();
             }
             else if (type === 'todo') {
-                let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
-                let currentTodo = toDO.getTodo(currentProject, obj.innerText);
-                toDO.projects[currentProject].todos.splice(currentTodo, 1);
+                let currentProjIndx = toDO.getProject(toDO.dom.todoHeader.innerText);
+                let currentTodoIndx = toDO.getTodo(currentProjIndx, obj.innerText);
+                toDO.projects[currentProjIndx].todos.splice(currentTodoIndx, 1);
                 toDO.saveToStorage();
-                toDO.renderTodos(currentProject);
+                toDO.renderTodos(currentProjIndx);
+            }
+        },
+        makeElementEditable: function makeElementEditable (type, obj) {
+            if (type === 'project') {
+
+            }
+            else if (type === 'todo') {
+                toDO.previousName = obj.todoName.innerText;
+                obj.todoName.contentEditable = true;
+                obj.todoName.focus();
+                obj.slideMenu.classList.remove('open')
+                toDO.rightClicks = 0;
+            }
+        },
+        changeElementsName: function changeElementsName (type, currentProjIndx, obj) {
+            if (type === 'project') {
+
+            }
+            else if (type === 'todo') {
+                obj.todoName.contentEditable = false;
+                let currentTodoIndx = toDO.getTodo(currentProjIndx, toDO.previousName);
+                toDO.projects[currentProjIndx].todos[currentTodoIndx].todoName = obj.todoName.innerText;
+                toDO.saveToStorage();
+                toDO.renderTodos(currentProjIndx);
             }
         },
         saveToStorage: function saveToStorage() {
