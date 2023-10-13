@@ -83,7 +83,7 @@ h1 {
     margin: 0px;
     padding: 0px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .search {
@@ -187,11 +187,11 @@ h1 {
     align-items: center;
     gap: 0.5rem;
     background-color: #f87171;
-    border: 2px solid black;
+    border: 2px solid white;
     box-shadow: 3px 5px 5px #1f29378b;
     min-height: 3rem;
     text-shadow: 3px 5px 5px #1f2937;
-    max-width: 90%;
+    max-width: 20rem;
     min-width: 20rem;
     padding: 0.5rem;
     overflow: hidden;
@@ -287,6 +287,14 @@ input[type="checkbox"]:focus {
     max-width: 44px;
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
     cursor: pointer;
+}
+
+.slideMenu-img:hover {
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
+
+.slideMenu-img:active {
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
 }
 
 .slideMenu-btn-del {

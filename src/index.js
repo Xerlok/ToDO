@@ -8,7 +8,7 @@ const App = (() => {
     const toDO = {
         dom: cacheDOM(),
         projects: [],
-        timesClicked: 0,
+        rightClicks: 0,
 
         switchPage: function switchPage() {
             if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'flex') {
@@ -60,13 +60,32 @@ const App = (() => {
             }
 
             for (let i = 0; i < toDO.projects.length; i++) {
-                let project = toDO.dom.createProject(toDO.projects[i].projectName);
-                project.addEventListener('click', toDO.addProjectClick);
-                project.addEventListener('contextmenu', (e) => {
+                let newProject = toDO.dom.createProject(toDO.projects[i].projectName);
+                newProject.project.addEventListener('click', toDO.openProject);
+                newProject.project.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
-                    toDO.showModal('project', project);
-                })
-                toDO.dom.projects.append(project);
+                    if (toDO.rightClicks > 0) {
+                        newProject.slideMenu.classList.remove('open')
+                        toDO.rightClicks = 0;
+                    }
+                    else {
+                        newProject.slideMenu.classList.add('open');
+                        toDO.rightClicks++;
+                    }
+                });
+                newProject.slideMenuBtnDel.addEventListener('click', () => {
+                    toDO.showModal('project', newProject.project);
+                });
+                newProject.slideMenuBtnEdit.addEventListener('click', () => {
+                    newProject.project.contentEditable = true;
+                    newProject.project.focus();
+                    newProject.slideMenu.classList.remove('open')
+                    toDO.rightClicks = 0;
+                });
+                newProject.project.addEventListener('blur', () => {
+                    newProject.project.contentEditable = false;
+                });
+                toDO.dom.projects.append(newProject.project);
             }
         },
         renderTodos: function renderTodos(currentProject) {
@@ -76,26 +95,38 @@ const App = (() => {
             if (toDO.projects[currentProject].todos != '') {
                 for (let i = 0; i < toDO.projects[currentProject].todos.length; i++) {
                     let newTodo = toDO.dom.createTodo(toDO.projects[currentProject].todos[i].todoName);
+                    let previousName = newTodo.todoName.innerText;
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
                         toDO.checkboxClick(e, newTodo.todo);
                     });
                     newTodo.todo.addEventListener('contextmenu', (e) => {
                         e.preventDefault();
-                        if (toDO.timesClicked > 0) {
+                        if (toDO.rightClicks > 0) {
                             newTodo.slideMenu.classList.remove('open')
-                            toDO.timesClicked = 0;
+                            toDO.rightClicks = 0;
                         }
                         else {
                             newTodo.slideMenu.classList.add('open');
-                            toDO.timesClicked++;
+                            toDO.rightClicks++;
                         }
                     });
                     newTodo.slideMenuBtnDel.addEventListener('click', () => {
                         toDO.showModal('todo', newTodo.todo);
                     });
                     newTodo.slideMenuBtnEdit.addEventListener('click', () => {
-                        newTodo.todo.contentEditable = true;
-                    })
+                        previousName = newTodo.todoName.innerText;
+                        newTodo.todoName.contentEditable = true;
+                        newTodo.todoName.focus();
+                        newTodo.slideMenu.classList.remove('open')
+                        toDO.rightClicks = 0;
+                    });
+                    newTodo.todoName.addEventListener('blur', () => {
+                        newTodo.todoName.contentEditable = false;
+                        let currentTodo = toDO.getTodo(currentProject, previousName);
+                        toDO.projects[currentProject].todos[currentTodo].todoName = newTodo.todoName.innerText;
+                        toDO.saveToStorage();
+                        toDO.renderTodos(currentProject);
+                    });
                     if (toDO.projects[currentProject].todos[i].todoDone === true) {
                         newTodo.todo.style.backgroundColor = 'grey';
                         newTodo.todo.style.textDecoration = 'line-through';
@@ -114,7 +145,7 @@ const App = (() => {
             let currentTodo = toDO.projects[project].todos.findIndex(todo => todo.todoName === name);
             return currentTodo;
         },
-        addProjectClick: function addProjectClick(e) {
+        openProject: function openProject(e) {
             let currentProject = toDO.getProject(e.target.innerText);
             toDO.dom.projectsContainer.style.display = 'none';
             toDO.dom.todoContainer.style.display = 'flex';
@@ -133,18 +164,20 @@ const App = (() => {
             toDO.saveToStorage();
             toDO.renderTodos(currentProject);
         },
-        todoRightClick: function todoRightClick(todo) {
-            let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
-            let currentTodo = toDO.getTodo(currentProject, todo.innerText);
-            toDO.projects[currentProject].todos.splice(currentTodo, 1);
-            toDO.saveToStorage();
-            toDO.renderTodos(currentProject);
-        },
-        projectRightClick: function projectRightClick(project) {
-            let currentProject = toDO.getProject(project.innerText);
-            toDO.projects.splice(currentProject, 1);
-            toDO.saveToStorage();
-            toDO.renderProjects();
+        deleteElement: function deleteElement (type, obj) {
+            if (type === 'project') {
+                let currentProject = toDO.getProject(obj.innerText);
+                toDO.projects.splice(currentProject, 1);
+                toDO.saveToStorage();
+                toDO.renderProjects();
+            }
+            else if (type === 'todo') {
+                let currentProject = toDO.getProject(toDO.dom.todoHeader.innerText);
+                let currentTodo = toDO.getTodo(currentProject, obj.innerText);
+                toDO.projects[currentProject].todos.splice(currentTodo, 1);
+                toDO.saveToStorage();
+                toDO.renderTodos(currentProject);
+            }
         },
         saveToStorage: function saveToStorage() {
             localStorage.setItem('projects', JSON.stringify(toDO.projects));
@@ -183,14 +216,7 @@ const App = (() => {
                 beforeDestroy: () => {}, // callback before destroy modal
                 afterDestroy: () => {}, // callback after destroy modal
                 onCancelButton: () => {}, // callback after triggering cancel button
-                onConfirmButton: () => {
-                    if (type === 'project') {
-                        toDO.projectRightClick(obj);
-                    }
-                    else if (type === 'todo') {
-                        toDO.todoRightClick(obj);
-                    }
-                }, // callback after triggering confirm button
+                onConfirmButton: () => {toDO.deleteElement(type, obj);}, // callback after triggering confirm button
             });
         }
     }
