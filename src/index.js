@@ -74,17 +74,16 @@ const App = (() => {
                         toDO.rightClicks++;
                     }
                 });
-                newProject.slideMenuBtnDel.addEventListener('click', () => {
+                newProject.slideMenuBtnDel.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     toDO.showModal('project', newProject.project);
                 });
-                newProject.slideMenuBtnEdit.addEventListener('click', () => {
-                    newProject.project.contentEditable = true;
-                    newProject.project.focus();
-                    newProject.slideMenu.classList.remove('open')
-                    toDO.rightClicks = 0;
+                newProject.slideMenuBtnEdit.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toDO.makeElementEditable('project', newProject);
                 });
-                newProject.project.addEventListener('blur', () => {
-                    newProject.project.contentEditable = false;
+                newProject.projectName.addEventListener('blur', () => {
+                    toDO.changeElementsName('project', i, newProject);
                 });
                 toDO.dom.projects.append(newProject.project);
             }
@@ -139,7 +138,14 @@ const App = (() => {
             return currentTodoIndx;
         },
         openProject: function openProject(e) {
-            let currentProjIndx = toDO.getProject(e.target.innerText);
+            let currentProjIndx;
+            if (e.target.classList[0] === 'project') {
+                currentProjIndx = toDO.getProject(e.target.firstChild.innerText);
+            }
+            else if (e.target.classList[0] === 'project-name') {
+                currentProjIndx = toDO.getProject(e.target.innerText);
+            }
+
             toDO.dom.projectsContainer.style.display = 'none';
             toDO.dom.todoContainer.style.display = 'flex';
             toDO.dom.todoHeader.innerText = toDO.projects[currentProjIndx].projectName;
@@ -174,7 +180,10 @@ const App = (() => {
         },
         makeElementEditable: function makeElementEditable (type, obj) {
             if (type === 'project') {
-
+                obj.projectName.contentEditable = true;
+                obj.projectName.focus();
+                obj.slideMenu.classList.remove('open')
+                toDO.rightClicks = 0;
             }
             else if (type === 'todo') {
                 toDO.previousName = obj.todoName.innerText;
@@ -186,7 +195,10 @@ const App = (() => {
         },
         changeElementsName: function changeElementsName (type, currentProjIndx, obj) {
             if (type === 'project') {
-
+                obj.projectName.contentEditable = false;
+                toDO.projects[currentProjIndx].projectName = obj.projectName.innerText;
+                toDO.saveToStorage();
+                toDO.renderProjects();
             }
             else if (type === 'todo') {
                 obj.todoName.contentEditable = false;

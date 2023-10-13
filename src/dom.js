@@ -14,10 +14,13 @@ export default function cacheDOM() {
     function createProject(name) {
         let project = document.createElement('div');
         project.className = 'project';
-        project.innerText = name;
+
+        let projectName = document.createElement('div');
+        projectName.className = 'project-name';
+        projectName.innerText = name;
 
         let slideMenu = document.createElement('div');
-        slideMenu.className = 'slideMenu-container';
+        slideMenu.className = 'slideMenu-container-proj';
 
         let slideMenuBtnEdit = document.createElement('img');
         slideMenuBtnEdit.className = 'slideMenu-img slideMenu-btn-edit';
@@ -29,9 +32,10 @@ export default function cacheDOM() {
 
         slideMenu.append(slideMenuBtnEdit);
         slideMenu.append(slideMenuBtnDel);
+        project.append(projectName);
         project.append(slideMenu);
 
-        return {project, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
+        return {project, projectName, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
     }
 
     function createTodo(name, dueDate) {
@@ -54,7 +58,7 @@ export default function cacheDOM() {
         todoDue.innerText = dueDate;
 
         let slideMenu = document.createElement('div');
-        slideMenu.className = 'slideMenu-container';
+        slideMenu.className = 'slideMenu-container-todo';
 
         let slideMenuBtnEdit = document.createElement('img');
         slideMenuBtnEdit.className = 'slideMenu-img slideMenu-btn-edit';

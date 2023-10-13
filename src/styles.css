@@ -110,7 +110,7 @@ h1 {
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    overflow: auto;
+    overflow: hidden;
     cursor: pointer;
 }
 
@@ -268,7 +268,7 @@ input[type="checkbox"]:focus {
     gap: 1.5em;
 }
 
-.slideMenu-container {
+.slideMenu-container-todo {
     position: absolute;
     width: 30%;
     height: 100%;
@@ -280,7 +280,23 @@ input[type="checkbox"]:focus {
     justify-content: center;
     align-items: center;
 }
-.slideMenu-container.open {
+.slideMenu-container-todo.open {
+    right: 0%;
+}
+
+.slideMenu-container-proj {
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    background-color: #fca5a5;
+    right: -60%;
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+.slideMenu-container-proj.open {
     right: 0%;
 }
 
