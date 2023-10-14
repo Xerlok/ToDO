@@ -11,20 +11,14 @@ const App = (() => {
         rightClicks: 0,
         previousName: '',
 
-        switchPage: function switchPage() {
-            if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'flex') {
-                toDO.dom.projectsContainer.style.display = 'none';
-                toDO.dom.todoContainer.style.display = 'flex';
-            }
-
-            else if (window.getComputedStyle(toDO.dom.projectsContainer).display === 'none') {
-                toDO.dom.projectsContainer.style.display = 'flex';
-                toDO.dom.todoContainer.style.display = 'none';
-            }
+        backToProjects: function backToProjects() {
+            toDO.dom.projectsContainer.style.display = 'flex';
+            toDO.dom.todoContainer.style.display = 'none';
         },
         addListeners: function addListeners() {
-            toDO.dom.menuBtn.addEventListener('click', () => {
-                toDO.switchPage();
+            toDO.dom.backBtn.addEventListener('click', () => {
+                toDO.backToProjects();
+                toDO.dom.backBtn.style.display = 'none';
             })
 
             toDO.dom.projectForm.addEventListener('submit', (e) => {
@@ -148,6 +142,7 @@ const App = (() => {
 
             toDO.dom.projectsContainer.style.display = 'none';
             toDO.dom.todoContainer.style.display = 'flex';
+            toDO.dom.backBtn.style.display = 'block';
             toDO.dom.todoHeader.innerText = toDO.projects[currentProjIndx].projectName;
             toDO.renderTodos(currentProjIndx);
         },
