@@ -10,6 +10,8 @@ const App = (() => {
         projects: [],
         rightClicks: 0,
         previousName: '',
+        dragStartIndex: null,
+        dragEndIndex: null,
 
         backToProjects: function backToProjects() {
             toDO.dom.projectsContainer.style.display = 'flex';
@@ -55,7 +57,7 @@ const App = (() => {
             }
 
             for (let i = 0; i < toDO.projects.length; i++) {
-                let newProject = toDO.dom.createProject(toDO.projects[i].projectName);
+                let newProject = toDO.dom.createProject(toDO.projects[i].projectName, i);
                 newProject.project.addEventListener('click', toDO.openProject);
                 newProject.project.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
@@ -67,6 +69,32 @@ const App = (() => {
                         newProject.slideMenu.classList.add('open');
                         toDO.rightClicks++;
                     }
+                });
+                newProject.project.addEventListener('dragenter', (e) => {
+                    if (e.target.classList[0] !== 'project') return;
+                    e.target.classList.add('over');
+                });
+                newProject.project.addEventListener('dragleave', (e) => {
+                    e.target.classList.remove('over');
+                });
+                newProject.project.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                newProject.project.addEventListener('dragstart', (e) => {
+                    toDO.dragStartIndex = +e.target.getAttribute('data-index');
+                    console.log(this.dragStartIndex);
+                });
+                newProject.project.addEventListener('drop', (e) => {
+                    toDO.dragEndIndex = +e.target.getAttribute('data-index');
+                    console.log(this.dragEndIndex);
+
+                    let itemOne = toDO.projects[toDO.dragStartIndex];
+                    let itemTwo = toDO.projects[toDO.dragEndIndex];
+                    toDO.projects[toDO.dragStartIndex] = itemTwo;
+                    toDO.projects[toDO.dragEndIndex] = itemOne;
+                    e.target.classList.remove('over');
+                    toDO.renderProjects();
+                    toDO.saveToStorage();
                 });
                 newProject.slideMenuBtnDel.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -88,7 +116,7 @@ const App = (() => {
             }
             if (toDO.projects[currentProjIndx].todos != '') {
                 for (let i = 0; i < toDO.projects[currentProjIndx].todos.length; i++) {
-                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProjIndx].todos[i].todoName);
+                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProjIndx].todos[i].todoName, i);
                     toDO.previousName = newTodo.todoName.innerText;
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
                         toDO.updateTodoCompletion(e, newTodo.todo);
@@ -210,6 +238,7 @@ const App = (() => {
             if (localStorage.getItem('projects') != null) {
                 toDO.projects = JSON.parse(localStorage.getItem('projects'));
             }
+            console.log(this.projects);
         },
         showModal: function showModal(type, obj) {
             const myModal = new WebcimesModal({

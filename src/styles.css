@@ -133,6 +133,12 @@ h1 {
     cursor: pointer;
 }
 
+.project * {pointer-events: none;}
+
+.project.over {
+    background-color: grey;
+}
+
 .todo-container {
     align-self: flex-start;
     padding: 1rem;

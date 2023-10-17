@@ -12,9 +12,11 @@ export default function cacheDOM() {
     const todoHeader = document.querySelector('.todo-h1');
     const todos = document.querySelector('.todos');
 
-    function createProject(name) {
+    function createProject(name, indx) {
         let project = document.createElement('div');
         project.className = 'project';
+        project.draggable = true;
+        project.dataset.index = indx;
 
         let projectName = document.createElement('div');
         projectName.className = 'project-name';
@@ -39,9 +41,10 @@ export default function cacheDOM() {
         return {project, projectName, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
     }
 
-    function createTodo(name, dueDate) {
+    function createTodo(name, indx, dueDate) {
         let todo = document.createElement('div');
         todo.className = 'todo';
+        todo.dataset.index = indx;
 
         let checkboxLabel = document.createElement('label');
         checkboxLabel.className = 'checkbox-control'
