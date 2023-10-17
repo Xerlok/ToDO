@@ -5,6 +5,7 @@
     --project-background-color: #0e7490;
     --todo-background-color: #0e7490;
     --slide-menu-background-color: #164e63;
+    --drag-over-background-color: white;
 }
 
 html,
@@ -136,7 +137,7 @@ h1 {
 .project * {pointer-events: none;}
 
 .project.over {
-    background-color: grey;
+    background-color: var(--drag-over-background-color);
 }
 
 .todo-container {
@@ -220,6 +221,12 @@ h1 {
     min-width: 20rem;
     padding: 0.5rem;
     overflow: hidden;
+}
+
+.todo * {pointer-events: none;}
+
+.todo.over {
+    background-color: var(--drag-over-background-color);
 }
 
 .todo-name {

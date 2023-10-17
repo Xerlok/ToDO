@@ -41,10 +41,12 @@ export default function cacheDOM() {
         return {project, projectName, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
     }
 
-    function createTodo(name, indx, dueDate) {
+    function createTodo(name, indx, projIndx, dueDate) {
         let todo = document.createElement('div');
         todo.className = 'todo';
         todo.dataset.index = indx;
+        todo.dataset.projectIndex = projIndx;
+        todo.draggable = true;
 
         let checkboxLabel = document.createElement('label');
         checkboxLabel.className = 'checkbox-control'

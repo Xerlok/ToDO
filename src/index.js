@@ -71,7 +71,6 @@ const App = (() => {
                     }
                 });
                 newProject.project.addEventListener('dragenter', (e) => {
-                    if (e.target.classList[0] !== 'project') return;
                     e.target.classList.add('over');
                 });
                 newProject.project.addEventListener('dragleave', (e) => {
@@ -116,7 +115,7 @@ const App = (() => {
             }
             if (toDO.projects[currentProjIndx].todos != '') {
                 for (let i = 0; i < toDO.projects[currentProjIndx].todos.length; i++) {
-                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProjIndx].todos[i].todoName, i);
+                    let newTodo = toDO.dom.createTodo(toDO.projects[currentProjIndx].todos[i].todoName, i, currentProjIndx);
                     toDO.previousName = newTodo.todoName.innerText;
                     newTodo.todoCheckbox.addEventListener('click', (e) => {
                         toDO.updateTodoCompletion(e, newTodo.todo);
@@ -132,6 +131,36 @@ const App = (() => {
                             toDO.rightClicks++;
                         }
                     });
+
+                    //new start
+                    newTodo.todo.addEventListener('dragenter', (e) => {
+                        e.target.classList.add('over');
+                    });
+                    newTodo.todo.addEventListener('dragleave', (e) => {
+                        e.target.classList.remove('over');
+                    });
+                    newTodo.todo.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                    });
+                    newTodo.todo.addEventListener('dragstart', (e) => {
+                        toDO.dragStartIndex = +e.target.getAttribute('data-index');
+                        console.log(this.dragStartIndex);
+                    });
+                    newTodo.todo.addEventListener('drop', (e) => {
+                        toDO.dragEndIndex = +e.target.getAttribute('data-index');
+                        let projectIndex = +e.target.getAttribute('data-project-index');
+                        console.log(this.dragEndIndex, this.dragProjectIndex);
+                        
+                        let todoOne = toDO.projects[projectIndex].todos[toDO.dragStartIndex];
+                        let todoTwo = toDO.projects[projectIndex].todos[toDO.dragEndIndex];
+                        toDO.projects[projectIndex].todos[toDO.dragStartIndex] = todoTwo;
+                        toDO.projects[projectIndex].todos[toDO.dragEndIndex] = todoOne;
+                        e.target.classList.remove('over');
+                        toDO.renderTodos(projectIndex);
+                        toDO.saveToStorage();
+                    });
+
+                    //new end
                     newTodo.slideMenuBtnDel.addEventListener('click', () => {
                         toDO.showModal('todo', newTodo.todo);
                     });
