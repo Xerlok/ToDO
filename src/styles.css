@@ -5,7 +5,7 @@
     --project-background-color: #0e7490;
     --todo-background-color: #0e7490;
     --slide-menu-background-color: #164e63;
-    --drag-over-background-color: white;
+    --drag-over-background-color: #172554;
 }
 
 html,
@@ -225,8 +225,19 @@ h1 {
 
 .todo * {pointer-events: none;}
 
+.todo-checkbox {pointer-events: all;}
+
 .todo.over {
     background-color: var(--drag-over-background-color);
+}
+
+.todo.checked.over {
+    background-color: var(--drag-over-background-color);
+}
+
+.todo.checked {
+    background-color: grey;
+    text-decoration: line-through;
 }
 
 .todo-name {
@@ -336,6 +347,7 @@ input[type="checkbox"]:focus {
     max-width: 44px;
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
     cursor: pointer;
+    pointer-events: all;
 }
 
 .slideMenu-img:hover {

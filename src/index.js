@@ -131,8 +131,6 @@ const App = (() => {
                             toDO.rightClicks++;
                         }
                     });
-
-                    //new start
                     newTodo.todo.addEventListener('dragenter', (e) => {
                         e.target.classList.add('over');
                     });
@@ -159,8 +157,6 @@ const App = (() => {
                         toDO.renderTodos(projectIndex);
                         toDO.saveToStorage();
                     });
-
-                    //new end
                     newTodo.slideMenuBtnDel.addEventListener('click', () => {
                         toDO.showModal('todo', newTodo.todo);
                     });
@@ -171,8 +167,7 @@ const App = (() => {
                         toDO.changeElementsName('todo', currentProjIndx, newTodo);
                     });
                     if (toDO.projects[currentProjIndx].todos[i].todoDone === true) {
-                        newTodo.todo.style.backgroundColor = 'grey';
-                        newTodo.todo.style.textDecoration = 'line-through';
+                        newTodo.todo.classList.add('checked');
                         newTodo.todoCheckbox.checked = true;
                     }
                     toDO.dom.todos.append(newTodo.todo);
