@@ -1,6 +1,6 @@
 'use strict'
 export default function cacheDOM() {
-    const backBtn = document.querySelector('.back-img')
+    const backBtns = document.querySelectorAll('.back-img');
     const menuBtn = document.querySelector('.main-menu-img');
     const projectsContainer = document.querySelector('.projects-container');
     const todoContainer = document.querySelector('.todo-container');
@@ -85,6 +85,6 @@ export default function cacheDOM() {
         return {todo, todoName, todoCheckbox, slideMenu, slideMenuBtnEdit, slideMenuBtnDel};
     }
 
-    return {menuBtn, backBtn, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, 
+    return {menuBtn, backBtns, projectsContainer, todoContainer, todoHeader, projectForm, todoForm, projectName, todoName, 
     projects, createProject, todos, createTodo};
 }

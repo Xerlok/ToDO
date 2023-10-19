@@ -18,10 +18,14 @@ const App = (() => {
             toDO.dom.todoContainer.style.display = 'none';
         },
         addListeners: function addListeners() {
-            toDO.dom.backBtn.addEventListener('click', () => {
-                toDO.backToProjects();
-                toDO.dom.backBtn.style.display = 'none';
-            })
+            toDO.dom.backBtns.forEach(backBtn => {
+                backBtn.addEventListener('click', () => {
+                    toDO.backToProjects();
+                    toDO.dom.backBtns.forEach(backBtn => {
+                        backBtn.style.display = 'none';
+                    });
+                })
+            });
 
             toDO.dom.projectForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -194,7 +198,9 @@ const App = (() => {
 
             toDO.dom.projectsContainer.style.display = 'none';
             toDO.dom.todoContainer.style.display = 'flex';
-            toDO.dom.backBtn.style.display = 'block';
+            toDO.dom.backBtns.forEach(backBtn => {
+                backBtn.style.display = 'block';
+            });
             toDO.dom.todoHeader.innerText = toDO.projects[currentProjIndx].projectName;
             toDO.renderTodos(currentProjIndx);
         },
