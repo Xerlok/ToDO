@@ -149,17 +149,7 @@ const App = (() => {
                         console.log(this.dragStartIndex);
                     });
                     newTodo.todo.addEventListener('drop', (e) => {
-                        toDO.dragEndIndex = +e.target.getAttribute('data-index');
-                        let projectIndex = +e.target.getAttribute('data-project-index');
-                        console.log(this.dragEndIndex, this.dragProjectIndex);
-                        
-                        let todoOne = toDO.projects[projectIndex].todos[toDO.dragStartIndex];
-                        let todoTwo = toDO.projects[projectIndex].todos[toDO.dragEndIndex];
-                        toDO.projects[projectIndex].todos[toDO.dragStartIndex] = todoTwo;
-                        toDO.projects[projectIndex].todos[toDO.dragEndIndex] = todoOne;
-                        e.target.classList.remove('over');
-                        toDO.renderTodos(projectIndex);
-                        toDO.saveToStorage();
+                        toDO.dropElement(e);
                     });
                     newTodo.slideMenuBtnDel.addEventListener('click', () => {
                         toDO.showModal('todo', newTodo.todo);
@@ -260,6 +250,17 @@ const App = (() => {
                 toDO.saveToStorage();
                 toDO.renderTodos(currentProjIndx);
             }
+        },
+        dropElement: function dropElement (e) {
+            toDO.dragEndIndex = +e.target.getAttribute('data-index');
+            let projectIndex = +e.target.getAttribute('data-project-index');
+            let todoOne = toDO.projects[projectIndex].todos[toDO.dragStartIndex];
+            let todoTwo = toDO.projects[projectIndex].todos[toDO.dragEndIndex];
+            toDO.projects[projectIndex].todos[toDO.dragStartIndex] = todoTwo;
+            toDO.projects[projectIndex].todos[toDO.dragEndIndex] = todoOne;
+            e.target.classList.remove('over');
+            toDO.renderTodos(projectIndex);
+            toDO.saveToStorage();
         },
         saveToStorage: function saveToStorage() {
             localStorage.setItem('projects', JSON.stringify(toDO.projects));
