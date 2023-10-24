@@ -242,6 +242,7 @@ h1 {
 
 .todo-name {
     flex-grow: 3;
+    padding-right: 0.5rem;
 }
 
 .due-date {
