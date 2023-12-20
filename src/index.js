@@ -1,11 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
 import './styles.css';
 import 'webcimes-modal/dist/css/webcimes-modal.css';
 import { WebcimesModal } from 'webcimes-modal';
 import cacheDOM from './dom';
 
-// eslint-disable-next-line no-unused-vars
-const App = (() => {
+(() => {
   const toDO = {
     dom: cacheDOM(),
     projects: [],

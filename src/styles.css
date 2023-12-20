@@ -1,10 +1,10 @@
 :root {
-    --main-background-color: #083344;
-    --header-background-color: #164e63;
-    --footer-background-color: #164e63;
-    --project-background-color: #0e7490;
-    --todo-background-color: #0e7490;
-    --slide-menu-background-color: #164e63;
+    --main-background-color: #fdba74;
+    --header-background-color: #fb923c;
+    --footer-background-color: #fb923c;
+    --project-background-color: #fb923c;
+    --todo-background-color: #fb923c;
+    --slide-menu-background-color: #fdba74;
     --drag-over-background-color: #172554;
 }
 
@@ -205,7 +205,7 @@ h1 {
 
 .todos {
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(320px, 1fr) );
+    grid-template-columns: repeat( 1, minmax(320px, 1fr) );
     gap: 0.5rem;
     max-width: 100vw;
 }
