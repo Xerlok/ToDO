@@ -4,6 +4,7 @@ import './styles.css';
 import showModal from './showModal';
 import cacheDOM from './dom';
 import saveToStorage from './saveToStorage';
+import loadFromStorage from './loadFromStorage';
 
 (() => {
   const toDO = {
@@ -255,14 +256,9 @@ import saveToStorage from './saveToStorage';
         newTodo.todoCheckbox.checked = true;
       }
     },
-    loadFromStorage: function loadFromStorage() {
-      if (localStorage.getItem('projects') != null) {
-        toDO.projects = JSON.parse(localStorage.getItem('projects'));
-      }
-    },
   };
 
   toDO.addListeners();
-  toDO.loadFromStorage();
+  toDO.projects = loadFromStorage();
   toDO.renderProjects();
 })();

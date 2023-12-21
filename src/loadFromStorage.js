@@ -1,5 +1,7 @@
-export default function loadFromStorage(array) {
+export default function loadFromStorage() {
   if (localStorage.getItem('projects') != null) {
-    array = JSON.parse(localStorage.getItem('projects'));
+    const array = JSON.parse(localStorage.getItem('projects'));
+    return array;
   }
+  return null;
 }
