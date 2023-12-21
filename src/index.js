@@ -3,6 +3,7 @@
 import './styles.css';
 import showModal from './showModal';
 import cacheDOM from './dom';
+import saveToStorage from './saveToStorage';
 
 (() => {
   const toDO = {
@@ -27,7 +28,7 @@ import cacheDOM from './dom';
         toDO.projects.push(newProject);
         toDO.renderProjects();
         toDO.dom.projectName.value = '';
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
       });
 
       toDO.dom.todoForm.addEventListener('submit', (e) => {
@@ -38,7 +39,7 @@ import cacheDOM from './dom';
         toDO.projects[currentProjIndx].todos.push(newTodo);
         toDO.renderTodos(currentProjIndx);
         toDO.dom.todoName.value = '';
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
       });
     },
     CreateProject: function Project(projectName) {
@@ -109,20 +110,20 @@ import cacheDOM from './dom';
       } else {
         toDO.projects[currentProjIndx].todos[currentTodoIndx].todoDone = false;
       }
-      toDO.saveToStorage();
+      saveToStorage(toDO.projects);
       toDO.renderTodos(currentProjIndx);
     },
     deleteElement: function deleteElement(type, obj) {
       if (type === 'project') {
         const currentProjIndx = toDO.getProject(obj.innerText);
         toDO.projects.splice(currentProjIndx, 1);
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
         toDO.renderProjects();
       } else if (type === 'todo') {
         const currentProjIndx = toDO.getProject(toDO.dom.todoHeader.innerText);
         const currentTodoIndx = toDO.getTodo(currentProjIndx, obj.innerText);
         toDO.projects[currentProjIndx].todos.splice(currentTodoIndx, 1);
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
         toDO.renderTodos(currentProjIndx);
       }
     },
@@ -144,13 +145,13 @@ import cacheDOM from './dom';
       if (type === 'project') {
         obj.projectName.contentEditable = false;
         toDO.projects[currentProjIndx].projectName = obj.projectName.innerText;
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
         toDO.renderProjects();
       } else if (type === 'todo') {
         obj.todoName.contentEditable = false;
         const currentTodoIndx = toDO.getTodo(currentProjIndx, toDO.previousName);
         toDO.projects[currentProjIndx].todos[currentTodoIndx].todoName = obj.todoName.innerText;
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
         toDO.renderTodos(currentProjIndx);
       }
     },
@@ -163,7 +164,7 @@ import cacheDOM from './dom';
       toDO.projects[projectIndex].todos[toDO.dragEndIndex] = todoOne;
       e.target.classList.remove('over');
       toDO.renderTodos(projectIndex);
-      toDO.saveToStorage();
+      saveToStorage(toDO.projects);
     },
     addListenersProjects: function addListenersProjects(newProject, i) {
       newProject.project.addEventListener('click', toDO.openProject);
@@ -197,7 +198,7 @@ import cacheDOM from './dom';
         toDO.projects[toDO.dragEndIndex] = itemOne;
         e.target.classList.remove('over');
         toDO.renderProjects();
-        toDO.saveToStorage();
+        saveToStorage(toDO.projects);
       });
       newProject.slideMenuBtnDel.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -253,9 +254,6 @@ import cacheDOM from './dom';
         newTodo.todo.classList.add('checked');
         newTodo.todoCheckbox.checked = true;
       }
-    },
-    saveToStorage: function saveToStorage() {
-      localStorage.setItem('projects', JSON.stringify(toDO.projects));
     },
     loadFromStorage: function loadFromStorage() {
       if (localStorage.getItem('projects') != null) {
