@@ -176,7 +176,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sty
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ loadFromStorage)\n/* harmony export */ });\nfunction loadFromStorage() {\n  if (localStorage.getItem('projects') != null) {\n    const array = JSON.parse(localStorage.getItem('projects'));\n    return array;\n  }\n  return null;\n}\n\n\n//# sourceURL=webpack://todo/./src/loadFromStorage.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ loadFromStorage)\n/* harmony export */ });\nfunction loadFromStorage() {\n  if (localStorage.getItem('projects') != null) {\n    const array = JSON.parse(localStorage.getItem('projects'));\n    return array;\n  }\n  return [];\n}\n\n\n//# sourceURL=webpack://todo/./src/loadFromStorage.js?");
 
 /***/ }),
 
