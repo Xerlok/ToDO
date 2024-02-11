@@ -3,5 +3,5 @@ export default function loadFromStorage() {
     const array = JSON.parse(localStorage.getItem('projects'));
     return array;
   }
-  return null;
+  return [];
 }
