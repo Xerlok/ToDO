@@ -260,5 +260,6 @@ import loadFromStorage from './loadFromStorage';
 
   toDO.addListeners();
   toDO.projects = loadFromStorage();
+  console.log(toDO.projects);
   toDO.renderProjects();
 })();
