@@ -26,7 +26,7 @@ import loadFromStorage from './loadFromStorage';
       toDO.dom.projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const newProject = new toDO.CreateProject(toDO.dom.projectName.value);
-        toDO.projects.push(newProject);
+        toDO.projects.unshift(newProject);
         toDO.renderProjects();
         toDO.dom.projectName.value = '';
         saveToStorage(toDO.projects);
@@ -37,7 +37,7 @@ import loadFromStorage from './loadFromStorage';
         const projectName = toDO.dom.todoHeader.innerText;
         const currentProjIndx = toDO.getProject(projectName);
         const newTodo = new toDO.CreateTodo(toDO.dom.todoName.value, false);
-        toDO.projects[currentProjIndx].todos.push(newTodo);
+        toDO.projects[currentProjIndx].todos.unshift(newTodo);
         toDO.renderTodos(currentProjIndx);
         toDO.dom.todoName.value = '';
         saveToStorage(toDO.projects);

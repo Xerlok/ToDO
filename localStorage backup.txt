@@ -1,0 +1,179 @@
+[
+
+    -
+    {
+        "projectName": "Work",
+        -
+        "todos": [
+            -
+            {
+                "todoName": "Knowledge test",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Templates for tickets",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Make template about personal data",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Make a template - cancellation reason",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Make a template for chat - hotel support",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Write KPI in 2 files for this week (check slack)",
+                "todoDone": false
+            }
+        ]
+    },
+    -
+    {
+        "projectName": "Life",
+        -
+        "todos": [
+            -
+            {
+                "todoName": "Buy Gamepad",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Buy Frunizer",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Buy headphones",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Buy laptop",
+                "todoDone": false
+            }
+        ]
+    },
+    -
+    {
+        "projectName": "Dailies",
+        -
+        "todos": [
+            -
+            {
+                "todoName": "Excercise",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Program",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Write",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Game/anime/read",
+                "todoDone": false
+            }
+        ]
+    },
+    -
+    {
+        "projectName": "App",
+        -
+        "todos": [
+            -
+            {
+                "todoName": "Make ELs dragable like in Steam",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Make a game like quest window",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Choose themes",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Choose language",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Add priority",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Add due date",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Add detailed descriptions",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Make a menu",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Swipe slide menu",
+                "todoDone": false
+            }
+        ]
+    },
+    -
+    {
+        "projectName": "App Menu",
+        -
+        "todos": [
+            -
+            {
+                "todoName": "Color themes",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Change language",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Delete data",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Change sizes",
+                "todoDone": false
+            },
+            -
+            {
+                "todoName": "Log in",
+                "todoDone": false
+            }
+        ]
+    }
+
+]
