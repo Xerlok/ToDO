@@ -18,8 +18,11 @@ export default class ToDoApp {
 
   start() {
     this.addListeners();
-    this.projects = loadFromStorage();
-    this.renderProjects();
+    loadFromStorage().then((data) => {
+      this.projects = data.projects;
+      this.renderProjects();
+    });
+    
   }
 
   addListeners() {
@@ -35,7 +38,7 @@ export default class ToDoApp {
       const newProject = new ToDoProject(this.dom.projectName.value);
       this.projects.unshift(newProject);
       this.renderProjects();
-      this.dom.projectName.value = '';
+      this.dom.projectName.value = null;
       saveToStorage(this.projects);
     });
 
@@ -46,21 +49,11 @@ export default class ToDoApp {
       const newTodo = new ToDO(this.dom.todoName.value, false);
       this.projects[currentProjIndx].todos.unshift(newTodo);
       this.renderTodos(currentProjIndx);
-      this.dom.todoName.value = '';
+      this.dom.todoName.value = null;
       saveToStorage(this.projects);
     });
   }
 
-/*  CreateProject: function Project(projectName) {
-    this.projectName = projectName;
-    this.todos = [];
-  }
-
-  CreateTodo: function Todo(todoName, todoDone) {
-    this.todoName = todoName;
-    this.todoDone = todoDone;
-  }
-*/
   renderProjects() {
     while (this.dom.projects.hasChildNodes()) {
       this.dom.projects.removeChild(this.dom.projects.firstChild);

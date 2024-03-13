@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export default function cacheDOM() {
   const backBtns = document.querySelectorAll('.back-img');
   const menuBtn = document.querySelector('.main-menu-img');
