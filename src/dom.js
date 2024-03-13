@@ -54,7 +54,7 @@ export default function cacheDOM() {
     todo.draggable = true;
 
     const checkboxLabel = document.createElement('label');
-    checkboxLabel.className = 'checkbox-control'
+    checkboxLabel.className = 'checkbox-control';
 
     const todoCheckbox = document.createElement('input');
     todoCheckbox.type = 'checkbox';
