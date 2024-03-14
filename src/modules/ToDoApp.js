@@ -36,6 +36,7 @@ export default class ToDoApp {
 
     this.dom.logInBtn.addEventListener('click', () => {
       firebase().authentication();
+      this.dom.authentication.style.display = 'flex';
     });
 
     this.dom.projectForm.addEventListener('submit', (e) => {

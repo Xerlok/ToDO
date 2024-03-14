@@ -26,19 +26,15 @@ export default function firebase() {
   function authentication() {
     const authUI = new firebaseui.auth.AuthUI(auth);
 
-    authUI.start('#firebaseui-auth-container', {
-      signInOptions: [
-        {
-          provider: Firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          requireDisplayName: false,
-        },
-      ],
-      // Other config options...
-    });
-
     const uiConfig = {
       callbacks: {
         signInSuccessWithAuthResult(authResult, redirectUrl) {
+          let {user} = authResult;
+          let {credential} = authResult;
+          let {isNewUser} = authResult.additionalUserInfo;
+          let {providerId} = authResult.additionalUserInfo;
+          let {operationType} = authResult;
+          // Do something with the returned AuthResult.
           // User successfully signed in.
           // Return type determines whether we continue the redirect automatically
           // or whether we leave that to developer to handle.
@@ -52,10 +48,13 @@ export default function firebase() {
       },
       // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
       signInFlow: 'popup',
-      signInSuccessUrl: '<url-to-redirect-to-on-success>',
+      signInSuccessUrl: 'http://127.0.0.1:5501/dist/index.html',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
-        Firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        {
+          provider: Firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          requireDisplayName: false,
+        },
       ],
       // Terms of service url.
       tosUrl: '<your-tos-url>',

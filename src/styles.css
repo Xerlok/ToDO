@@ -2,6 +2,7 @@
     --main-background-color: #fdba74;
     --header-background-color: #fb923c;
     --footer-background-color: #fb923c;
+    --auth-background-color: #fb923cef;
     --project-background-color: #fb923c;
     --todo-background-color: #fb923c;
     --slide-menu-background-color: #fdba74;
@@ -103,6 +104,26 @@ h1 {
     padding: 0px;
     text-align: center;
     font-size: 2rem;
+}
+
+.authentication {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  background-color:  var(--auth-background-color);
+}
+
+.log-in-text {
+  text-shadow: 3px 5px 5px #1f2937;
 }
 
 .project-form input {
