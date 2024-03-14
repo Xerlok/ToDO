@@ -2,6 +2,7 @@
 export default function cacheDOM() {
   const backBtns = document.querySelectorAll('.back-img');
   const menuBtn = document.querySelector('.main-menu-img');
+  const logInBtn = document.querySelector('.log-in-img');
   const projectsContainer = document.querySelector('.projects-container');
   const todoContainer = document.querySelector('.todo-container');
   const projectForm = document.querySelector('.project-form');
@@ -11,6 +12,7 @@ export default function cacheDOM() {
   const projects = document.querySelector('.projects');
   const todoHeader = document.querySelector('.todo-h1');
   const todos = document.querySelector('.todos');
+  const authentication = document.querySelector('.authentication');
 
   function createProject(name, indx) {
     const project = document.createElement('div');
@@ -112,5 +114,7 @@ export default function cacheDOM() {
     createProject,
     todos,
     createTodo,
+    logInBtn,
+    authentication,
   };
 }

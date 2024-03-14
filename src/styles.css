@@ -63,7 +63,7 @@ body {
 
 .back-img {
     display: none;
-    max-width: 40px;
+    max-width: 35px;
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
     cursor: pointer;
 }
@@ -72,6 +72,11 @@ body {
     display: none;
     max-width: 44px;
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
+}
+
+.log-in-img {
+  max-width: 44px;
+  filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(110%) contrast(100%);
 }
 
 .main-content {

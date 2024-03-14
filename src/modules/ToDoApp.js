@@ -5,6 +5,7 @@ import loadFromStorage from './loadFromStorage';
 import showModal from './showModal';
 import ToDO from './ToDo';
 import ToDoProject from './ToDoProject';
+import firebase from './firebase';
 
 export default class ToDoApp {
   constructor() {
@@ -33,6 +34,10 @@ export default class ToDoApp {
       });
     });
 
+    this.dom.logInBtn.addEventListener('click', () => {
+      firebase().authentication();
+    });
+
     this.dom.projectForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newProject = new ToDoProject(this.dom.projectName.value);
@@ -46,6 +51,7 @@ export default class ToDoApp {
       e.preventDefault();
       const projectName = this.dom.todoHeader.innerText;
       const currentProjIndx = this.getProject(projectName);
+      console.log(currentProjIndx);
       const newTodo = new ToDO(this.dom.todoName.value, false);
       this.projects[currentProjIndx].todos.unshift(newTodo);
       this.renderTodos(currentProjIndx);

@@ -23,6 +23,7 @@
   "dependencies": {
     "date-fns": "^2.30.0",
     "firebase": "^10.8.1",
+    "firebaseui": "^6.1.0",
     "webcimes-modal": "^1.1.5"
   }
 }
