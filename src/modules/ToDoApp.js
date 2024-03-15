@@ -4,6 +4,8 @@ import showModal from './showModal';
 import ToDO from './ToDo';
 import ToDoProject from './ToDoProject';
 import { firebase, loadFromStorage, saveToStorage } from './firebase';
+import { createUserWithEmailAndPassword, signInAnonymously } from "firebase/auth";
+
 
 export default class ToDoApp {
   constructor() {
@@ -35,12 +37,43 @@ export default class ToDoApp {
       this.dom.authentication.style.display = 'flex';
     });
 
-    this.dom.signUpCancelBtn.addEventListener('click', () => {
-      this.dom.authentication.style.display = 'none';
+    this.dom.signUpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = this.dom.signUpForm['sign-up-email'].value;
+      const pswrd = this.dom.signUpForm['sign-up-pswrd'].value;
+      const auth = firebase().auth;
+
+      createUserWithEmailAndPassword(auth, email, pswrd).then(userCredential => {
+        console.log(userCredential);
+        const user = userCredential;
+
+        this.dom.signUpForm.reset();
+        this.dom.authentication.style.display = 'none';
+        this.dom.signUpBtn.style.display = 'none';
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === 'auth/email-already-in-use') {
+          alert('This email is already in use!');
+        }
+      })
     });
 
-    this.dom.signUpCreateBtn.addEventListener('click', () => {
-      alert('Account created!');
+    this.dom.signUpCancelBtn.addEventListener('click', () => {
+      this.dom.authentication.style.display = 'none';
+      this.dom.signUpForm.reset();
+    });
+
+    this.dom.signInForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+    });
+
+    this.dom.signInCancelBtn.addEventListener('click', () => {
+      this.dom.authentication.style.display = 'none';
+      this.dom.signInForm.reset();
     });
 
     this.dom.projectForm.addEventListener('submit', (e) => {

@@ -122,7 +122,7 @@ h1 {
   background-color:  var(--auth-background-color);
 }
 
-.sign-up-container {
+.sign-up-container, .sign-in-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -132,15 +132,14 @@ h1 {
   padding: 2rem;
 }
 
-.sign-up-header {
+.sign-up-header, .sign-in-header {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
 }
 
-.sign-up-form
- {
+.sign-up-form, .sign-in-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
