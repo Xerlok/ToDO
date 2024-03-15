@@ -1,11 +1,9 @@
 /* eslint-disable */
 import cacheDOM from './dom';
-import saveToStorage from './saveToStorage';
-import loadFromStorage from './loadFromStorage';
 import showModal from './showModal';
 import ToDO from './ToDo';
 import ToDoProject from './ToDoProject';
-import firebase from './firebase';
+import { firebase, loadFromStorage, saveToStorage } from './firebase';
 
 export default class ToDoApp {
   constructor() {
@@ -18,12 +16,11 @@ export default class ToDoApp {
   }
 
   start() {
-    this.addListeners();
     loadFromStorage().then((data) => {
       this.projects = data.projects;
       this.renderProjects();
     });
-    
+    this.addListeners();
   }
 
   addListeners() {
@@ -34,9 +31,16 @@ export default class ToDoApp {
       });
     });
 
-    this.dom.logInBtn.addEventListener('click', () => {
-      firebase().authentication();
+    this.dom.signUpBtn.addEventListener('click', () => {
       this.dom.authentication.style.display = 'flex';
+    });
+
+    this.dom.signUpCancelBtn.addEventListener('click', () => {
+      this.dom.authentication.style.display = 'none';
+    });
+
+    this.dom.signUpCreateBtn.addEventListener('click', () => {
+      alert('Account created!');
     });
 
     this.dom.projectForm.addEventListener('submit', (e) => {

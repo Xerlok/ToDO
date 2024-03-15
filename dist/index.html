@@ -14,13 +14,27 @@
               <img src="./img/logo.svg" alt="logo" class="logo">
             </div>
             <div class="main-menu">
-              <img src="./img/log-in.svg" alt="log in button" class="log-in-img">
+              <img src="./img/log-in.svg" alt="sign up button" class="sign-up-img">
               <img src="./img/menu.svg" alt="menu button" class="main-menu-img">
             </div>
         </div>
         <div class="authentication">
-          <h1 class="log-in-text">ToDo Log in</h1>
-          <div id="firebaseui-auth-container"></div>
+          <div class="sign-up-container">
+            <div class="sign-up-header">
+              <h1 class="sign-up-text">ToDo</h1>
+              <img src="./img/logo.svg" alt="logo" class="logo">
+            </div>
+            <form action="" class="sign-up-form">
+              <label for="sign-up-email">Email:</label>
+              <input type="email" placeholder="example@example.com" name="sign-up-email" id="sign-up-email">
+              <label for="sign-up-pswrd">Password:</label>
+              <input type="password" placeholder="Password" name="sign-up-pswrd" id="sign-up-pswrd">
+              <div class="sign-up-btns">
+                <button type="button" class="sign-up-cancel">Cancel</button>
+                <button type="button" class="sign-up-create">Create Account</button>
+              </div>
+            </form>
+          </div>
           <div id="loader">Loading...</div>
         </div>
         <div class="main-content">
