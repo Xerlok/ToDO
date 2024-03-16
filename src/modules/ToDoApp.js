@@ -33,8 +33,8 @@ export default class ToDoApp {
       });
     });
 
-    this.dom.signUpBtn.addEventListener('click', () => {
-      this.dom.authentication.style.display = 'flex';
+    this.dom.menuBtn.addEventListener('click', () => {
+      this.dom.mainMenu.classList.add('open');
     });
 
     this.dom.signUpForm.addEventListener('submit', (e) => {

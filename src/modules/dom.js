@@ -2,7 +2,6 @@
 export default function cacheDOM() {
   const backBtns = document.querySelectorAll('.back-img');
   const menuBtn = document.querySelector('.main-menu-img');
-  const signUpBtn = document.querySelector('.sign-up-img');
   const projectsContainer = document.querySelector('.projects-container');
   const todoContainer = document.querySelector('.todo-container');
   const projectForm = document.querySelector('.project-form');
@@ -19,6 +18,7 @@ export default function cacheDOM() {
   const signInForm = document.querySelector('.sign-in-form');
   const signInCancelBtn = document.querySelector('.sign-in-cancel');
   const signInFormBtn = document.querySelector('.sign-in-form-btn');
+  const mainMenu = document.querySelector('.main-menu');
 
   function createProject(name, indx) {
     const project = document.createElement('div');
@@ -120,7 +120,6 @@ export default function cacheDOM() {
     createProject,
     todos,
     createTodo,
-    signUpBtn,
     authentication,
     signUpCancelBtn,
     signUpCreateBtn,
@@ -128,5 +127,6 @@ export default function cacheDOM() {
     signInCancelBtn,
     signInFormBtn,
     signInForm,
+    mainMenu,
   };
 }
