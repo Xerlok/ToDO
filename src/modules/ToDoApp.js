@@ -37,6 +37,16 @@ export default class ToDoApp {
       this.dom.mainMenu.classList.add('open');
     });
 
+    this.dom.closeMenuBtn.addEventListener('click', () => {
+      this.dom.mainMenu.classList.remove('open');
+    });
+
+    this.dom.signUpBtn.addEventListener('click', () => {
+      this.dom.authentication.style.display = 'flex';
+      this.dom.signUpContainer.style.display = 'flex'
+      this.dom.mainMenu.classList.remove('open');
+    });
+
     this.dom.signUpForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
@@ -50,7 +60,7 @@ export default class ToDoApp {
 
         this.dom.signUpForm.reset();
         this.dom.authentication.style.display = 'none';
-        this.dom.signUpBtn.style.display = 'none';
+        this.dom.signUpContainer.style.display = 'none';
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -63,7 +73,14 @@ export default class ToDoApp {
 
     this.dom.signUpCancelBtn.addEventListener('click', () => {
       this.dom.authentication.style.display = 'none';
+      this.dom.signUpContainer.style.display = 'none';
       this.dom.signUpForm.reset();
+    });
+
+    this.dom.signInBtn.addEventListener('click', () => {
+      this.dom.authentication.style.display = 'flex';
+      this.dom.signInContainer.style.display = 'flex'
+      this.dom.mainMenu.classList.remove('open');
     });
 
     this.dom.signInForm.addEventListener('submit', (e) => {
@@ -73,6 +90,7 @@ export default class ToDoApp {
 
     this.dom.signInCancelBtn.addEventListener('click', () => {
       this.dom.authentication.style.display = 'none';
+      this.dom.signInContainer.style.display = 'none';
       this.dom.signInForm.reset();
     });
 
