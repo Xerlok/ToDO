@@ -13,11 +13,22 @@
               <p>ToDO</p>
               <img src="./img/logo.svg" alt="logo" class="logo">
             </div>
-            <div class="main-menu">
-              <img src="./img/log-in.svg" alt="sign up button" class="sign-up-img">
+            <nav class="nav-bar">
               <img src="./img/menu.svg" alt="menu button" class="main-menu-img">
-            </div>
+            </nav>
         </div>
+
+        <div class="main-menu">
+          <div class="menu-container">
+            <img src="./img/menu.svg" alt="menu button" class="main-menu-img open">
+            <ul>
+              <li>Sign Up</li>
+              <li>Sign In</li>
+              <li>Sign Out</li>
+            </ul>
+          </div>
+        </div>
+
         <div class="authentication">
           <div class="sign-up-container">
             <div class="sign-up-header">
@@ -30,8 +41,8 @@
               <label for="sign-up-pswrd">Password:</label>
               <input type="password" placeholder="Password" name="sign-up-pswrd" id="sign-up-pswrd">
               <div class="sign-up-btns">
-                <button type="button" class="sign-up-cancel">Cancel</button>
-                <button type="submit" class="sign-up-create">Create Account</button>
+                <button type="button" class="sign-up-cancel sign-btn">Cancel</button>
+                <button type="submit" class="sign-up-create sign-btn">Create Account</button>
               </div>
             </form>
           </div>
@@ -46,13 +57,14 @@
               <label for="sign-up-pswrd">Password:</label>
               <input type="password" placeholder="Password" name="sign-in-pswrd" id="sign-in-pswrd">
               <div class="sign-in-btns">
-                <button type="button" class="sign-in-cancel">Cancel</button>
-                <button type="submit" class="sign-in-form-btn">Sign in</button>
+                <button type="button" class="sign-in-cancel sign-btn">Cancel</button>
+                <button type="submit" class="sign-in-form-btn sign-btn">Sign in</button>
               </div>
             </form>
           </div>
           <div id="loader">Loading...</div>
         </div>
+
         <div class="main-content">
             <div class="projects-container">
                 <div class="projects-header">
@@ -81,6 +93,7 @@
                 </div>
             </div>
         </div>
+
         <div class="footer">
             <div class="footer-text">Copyright 2023</div>
         </div>
