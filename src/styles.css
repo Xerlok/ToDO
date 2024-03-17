@@ -106,7 +106,8 @@ h1 {
   right: 0%;
 }
 
-.main-menu-img, .close-main-menu-img {
+.main-menu-img, 
+.close-main-menu-img {
     max-width: 44px;
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(262deg) brightness(130%) contrast(100%);
     cursor: pointer;
@@ -126,7 +127,8 @@ h1 {
   background-color:  var(--auth-background-color);
 }
 
-.sign-up-container, .sign-in-container {
+.sign-up-container, 
+.sign-in-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -141,20 +143,23 @@ h1 {
   padding: 2rem;
 }
 
-.sign-up-header, .sign-in-header {
+.sign-up-header, 
+.sign-in-header {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
 }
 
-.sign-up-form, .sign-in-form {
+.sign-up-form, 
+.sign-in-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.sign-up-btns, .sign-in-btns {
+.sign-up-btns, 
+.sign-in-btns {
   display: flex;
   gap: 1rem;
 }
@@ -235,7 +240,8 @@ h1 {
     align-items: center;
 }
 
-.newTodo, .sign-btn {
+.newTodo, 
+.sign-btn {
     font-size: 1rem;
     appearance: none;
     background-color: #fafaf9;
@@ -265,18 +271,21 @@ h1 {
     will-change: transform;
 }
 
-.newTodo:disabled, .sign-btn:disabled {
+.newTodo:disabled, 
+.sign-btn:disabled {
     pointer-events: none;
 }
 
-.newTodo:hover, .sign-btn:hover {
+.newTodo:hover, 
+.sign-btn:hover {
     color: #fff;
     background-color: #f87171;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.newTodo:active, .sign-btn:hover {
+.newTodo:active, 
+.sign-btn:hover {
     box-shadow: none;
     transform: translateY(0);
 }

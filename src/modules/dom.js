@@ -5,7 +5,7 @@ export default function cacheDOM() {
   const closeMenuBtn = document.querySelector('.close-main-menu-img');
   const signUpBtn = document.querySelector('#signUpBtn');
   const signInBtn = document.querySelector('#signInBtn');
-  const logOutBtn = document.querySelector('#logOutBtn');
+  const signOutBtn = document.querySelector('#signOutBtn');
   const projectsContainer = document.querySelector('.projects-container');
   const todoContainer = document.querySelector('.todo-container');
   const projectForm = document.querySelector('.project-form');
@@ -139,6 +139,6 @@ export default function cacheDOM() {
     mainMenu,
     signUpBtn,
     signInBtn,
-    logOutBtn,
+    signOutBtn,
   };
 }
