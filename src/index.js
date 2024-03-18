@@ -1,6 +1,4 @@
 import './styles.css';
-import ToDoApp from './modules/ToDoApp';
+import { start } from './modules/ToDoApp';
 
-const App = new ToDoApp();
-
-App.start();
+start();

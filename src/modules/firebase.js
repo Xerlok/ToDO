@@ -4,7 +4,8 @@
 /* eslint-disable */
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue, set } from 'firebase/database';
-import { getAuth,
+import { 
+  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged } from 'firebase/auth';
@@ -42,6 +43,21 @@ function saveToStorage(array) {
   });
 }
 
+function listenToUserStatus(renderProjects) {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log(`User ${uid} is logged in`);
+      loadFromStorage().then((data) => {
+        renderProjects(data.projects);
+      });
+    } else {
+      console.log(`User is logged out`);
+      renderProjects([]);
+    }
+  });
+}
+
 function signUpUser(email, pswrd, dom) {
   createUserWithEmailAndPassword(auth, email, pswrd).then(userCredential => {
     const user = userCredential;
@@ -76,7 +92,6 @@ function signInUser(email, pswrd, dom) {
 function signOutUser(dom) {
   auth.signOut().then(() => {
     dom.mainMenu.classList.remove('open');
-    alert('Logged out');
   });
 }
 
@@ -86,5 +101,6 @@ export {
   signUpUser,
   signInUser,
   signOutUser,
+  listenToUserStatus,
   auth,
 };

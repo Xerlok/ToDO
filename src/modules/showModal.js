@@ -2,7 +2,8 @@
 import 'webcimes-modal/dist/css/webcimes-modal.css';
 import { WebcimesModal } from 'webcimes-modal';
 
-export default function showModal(type, obj, app) {
+export default function showModal(type, obj, fnctn) {
+  const deleteElement = fnctn;
   // eslint-disable-next-line no-unused-vars
   const myModal = new WebcimesModal({
     setId: null, // set a specific id on the modal. default "null"
@@ -32,6 +33,6 @@ export default function showModal(type, obj, app) {
     beforeDestroy: () => {}, // callback before destroy modal
     afterDestroy: () => {}, // callback after destroy modal
     onCancelButton: () => {}, // callback after triggering cancel button
-    onConfirmButton: () => { app.deleteElement(type, obj); }, // callback after triggering confirm button
+    onConfirmButton: () => { deleteElement(type, obj); }, // callback after triggering confirm button
   });
 }
