@@ -27,7 +27,8 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 
 function loadFromStorage() {
-  const projectsRef = ref(database, 'projects');
+  const userId = auth.currentUser.uid;
+  const projectsRef = ref(database, 'users/' + userId);
 
   return new Promise((resolve) => {
     onValue(projectsRef, (snapshot) => {
@@ -38,7 +39,8 @@ function loadFromStorage() {
 }
 
 function saveToStorage(array) {
-  set(ref(database, 'projects'), {
+  const userId = auth.currentUser.uid;
+  set(ref(database, 'users/' + userId), {
     projects: array,
   });
 }

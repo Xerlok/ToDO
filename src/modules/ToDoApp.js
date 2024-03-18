@@ -98,7 +98,6 @@ function addListeners() {
     e.preventDefault();
     const projectName = dom.todoHeader.innerText;
     const currentProjIndx = getProject(projectName);
-    console.log(currentProjIndx);
     const newTodo = new ToDO(dom.todoName.value, false);
     projects[currentProjIndx].todos.unshift(newTodo);
     renderTodos(currentProjIndx);
