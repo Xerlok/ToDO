@@ -87,7 +87,7 @@ function addListeners() {
 
   dom.projectForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const newProject = new ToDoProject(dom.projectName.value);
+    const newProject = new ToDoProject(cleanString(dom.projectName.value));
     projects.unshift(newProject);
     renderProjects();
     dom.projectName.value = null;
@@ -98,7 +98,7 @@ function addListeners() {
     e.preventDefault();
     const projectName = dom.todoHeader.innerText;
     const currentProjIndx = getProject(projectName);
-    const newTodo = new ToDO(dom.todoName.value, false);
+    const newTodo = new ToDO(cleanString(dom.todoName.value), false);
     projects[currentProjIndx].todos.unshift(newTodo);
     renderTodos(currentProjIndx);
     dom.todoName.value = null;
@@ -168,6 +168,9 @@ function backToProjects() {
 function updateTodoCompletion(e, todo) {
   const currentProjIndx = getProject(dom.todoHeader.innerText);
   const currentTodoIndx = getTodo(currentProjIndx, todo.innerText);
+  console.log(currentProjIndx, currentTodoIndx);
+  console.log(projects);
+  console.log(todo.innerText);
   if (e.target.checked) {
     projects[currentProjIndx].todos[currentTodoIndx].todoDone = true;
   } else {
@@ -210,13 +213,13 @@ function makeElementEditable(type, obj) {
 function changeElementsName(type, currentProjIndx, obj) {
   if (type === 'project') {
     obj.projectName.contentEditable = false;
-    projects[currentProjIndx].projectName = obj.projectName.innerText;
+    projects[currentProjIndx].projectName = cleanString(obj.projectName.innerText);
     saveToStorage(projects);
     renderProjects();
   } else if (type === 'todo') {
     obj.todoName.contentEditable = false;
     const currentTodoIndx = getTodo(currentProjIndx, previousName);
-    projects[currentProjIndx].todos[currentTodoIndx].todoName = obj.todoName.innerText;
+    projects[currentProjIndx].todos[currentTodoIndx].todoName = cleanString(obj.todoName.innerText);
     saveToStorage(projects);
     renderTodos(currentProjIndx);
   }
@@ -325,6 +328,12 @@ function addListenersTodos(newTodo, currentProjIndx, i) {
     newTodo.todo.classList.add('checked');
     newTodo.todoCheckbox.checked = true;
   }
+}
+
+function cleanString(string) {
+  let cleanedString = string.replace(/\s+/g, ' ').trim();
+
+  return cleanedString;
 }
 
 export { 
