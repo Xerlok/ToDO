@@ -168,9 +168,6 @@ function backToProjects() {
 function updateTodoCompletion(e, todo) {
   const currentProjIndx = getProject(dom.todoHeader.innerText);
   const currentTodoIndx = getTodo(currentProjIndx, todo.innerText);
-  console.log(currentProjIndx, currentTodoIndx);
-  console.log(projects);
-  console.log(todo.innerText);
   if (e.target.checked) {
     projects[currentProjIndx].todos[currentTodoIndx].todoDone = true;
   } else {
@@ -292,11 +289,12 @@ function addListenersTodos(newTodo, currentProjIndx, i) {
   });
   newTodo.todo.addEventListener('contextmenu', (e) => {
     e.preventDefault();
+    const slideMenus = document.querySelectorAll('.slideMenu-container-todo');
     if (rightClicks > 0) {
-      newTodo.slideMenu.classList.remove('open');
+      slideMenus.forEach((slideMenu) => { slideMenu.classList.remove('open'); })
       rightClicks = 0;
     } else {
-      newTodo.slideMenu.classList.add('open');
+      slideMenus.forEach((slideMenu) => { slideMenu.classList.add('open'); })
       rightClicks += 1;
     }
   });
