@@ -287,6 +287,7 @@ function addListenersTodos(newTodo, currentProjIndx, i) {
   newTodo.todoCheckbox.addEventListener('click', (e) => {
     updateTodoCompletion(e, newTodo.todo);
   });
+
   newTodo.todo.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     const slideMenus = document.querySelectorAll('.slideMenu-container-todo');
@@ -298,30 +299,39 @@ function addListenersTodos(newTodo, currentProjIndx, i) {
       rightClicks += 1;
     }
   });
+
   newTodo.todo.addEventListener('dragenter', (e) => {
     e.target.classList.add('over');
   });
+
   newTodo.todo.addEventListener('dragleave', (e) => {
     e.target.classList.remove('over');
   });
+
   newTodo.todo.addEventListener('dragover', (e) => {
     e.preventDefault();
   });
+
   newTodo.todo.addEventListener('dragstart', (e) => {
     dragStartIndex = +e.target.getAttribute('data-index');
   });
+
   newTodo.todo.addEventListener('drop', (e) => {
     dropElement(e);
   });
+
   newTodo.slideMenuBtnDel.addEventListener('click', () => {
     showModal('todo', newTodo.todo, deleteElement);
   });
+
   newTodo.slideMenuBtnEdit.addEventListener('click', () => {
     makeElementEditable('todo', newTodo);
   });
+
   newTodo.todoName.addEventListener('blur', () => {
     changeElementsName('todo', currentProjIndx, newTodo);
   });
+  
   if (projects[currentProjIndx].todos[i].todoDone === true) {
     newTodo.todo.classList.add('checked');
     newTodo.todoCheckbox.checked = true;
