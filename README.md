@@ -1,2 +1,2 @@
 # ToDO
-Simple To Do wep app/ The Odin project
+Simple To Do web app/ The Odin project
